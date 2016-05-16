@@ -55,14 +55,19 @@ bool anti_debug_antiTracePid() {
     if (anti_debug_getTracePid() != 0) return true;
     return false;
 }
-
+//http://kiya.space/2015/12/18/ptrace-basis/
 bool anti_debug_antiPtrace(void) {
+
     pid_t child;
     child = fork();
-    if (child)
+    if (child) {
+        LOGD("parent pid = %d" , getpid());
         wait(NULL);
-    else {
+        LOGD("sssss");
+    } else {
+        LOGD("child pid = %d" , getpid());
         pid_t parent = getppid();
+        LOGD("child's father's pid = %d" , getppid());
         if (ptrace(PTRACE_ATTACH, parent, 0, 0) < 0)
             while (1);
         sleep(1);

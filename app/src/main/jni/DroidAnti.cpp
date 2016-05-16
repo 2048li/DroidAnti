@@ -7,12 +7,11 @@
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
     LOGI("enter JNI_OnLoad!\n");
-    bool bDebug = anti_debug_antiTracePid();
+/*    bool bDebug = anti_debug_tracepid();
     if (bDebug) {
         LOGD("detect debuggee!");
     } else {
-        LOGD("no debuggee!");
-    }
-    anti_debug_antiPtrace();
+        LOGD("no debuggee!");*/
+    anti_debug_ptrace_traceme();
     return JNI_VERSION_1_6;
 }

@@ -8,9 +8,13 @@
 #include "common.h"
 
 pid_t anti_debug_getTracePid();
-bool anti_debug_antiParent();
-bool anti_debug_antiTracePid();
 
-bool anti_debug_antiPtrace(void);
+bool anti_debug_parent();
+
+bool anti_debug_tracepid();
+
+bool anti_debug_ptrace(void);
+
+bool anti_debug_ptrace_traceme(void);
 
 #endif //DROIDANTI_ANTI_DEBUG_H

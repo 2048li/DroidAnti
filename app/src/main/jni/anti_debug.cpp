@@ -41,7 +41,7 @@ pid_t anti_debug_getTracePid() {
 /*
  * 返回true表示被调试
  */
-bool anti_debug_antiParent() {
+bool anti_debug_parent() {
     char *ppName = getPPName();
     bool ret = lookupBlacklist(ppName);
     delete ppName;
@@ -51,19 +51,18 @@ bool anti_debug_antiParent() {
 /*
  * 返回true表示被调试
  */
-bool anti_debug_antiTracePid() {
+bool anti_debug_tracepid() {
     if (anti_debug_getTracePid() != 0) return true;
     return false;
 }
 //http://kiya.space/2015/12/18/ptrace-basis/
-bool anti_debug_antiPtrace(void) {
+bool anti_debug_ptrace(void) {
 
     pid_t child;
     child = fork();
     if (child) {
         LOGD("parent pid = %d" , getpid());
         wait(NULL);
-        LOGD("sssss");
     } else {
         LOGD("child pid = %d" , getpid());
         pid_t parent = getppid();
@@ -74,6 +73,14 @@ bool anti_debug_antiPtrace(void) {
         ptrace(PTRACE_DETACH, parent, 0, 0);
         exit(0);
     }
+}
+
+bool anti_debug_ptrace_traceme(void) {
+    if (-1 == ptrace(PTRACE_TRACEME)) {
+        LOGD("find debugger!");
+        return true;
+    }
+    return false;
 }
 
 
